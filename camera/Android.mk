@@ -2,15 +2,6 @@ LOCAL_PATH := $(call my-dir)
 
 ifneq ($(USE_CAMERA_STUB),true)
 ifneq ($(BUILD_TINY_ANDROID),true)
-      V4L2_BASED_LIBCAM := false
-      MM_STILL_V4L2_DRIVER_LIST := msm7x27a
-      #MM_STILL_V4L2_DRIVER_LIST += msm7630_surf
-      #MM_STILL_V4L2_DRIVER_LIST += msm7630_fusion
-      MM_STILL_V4L2_DRIVER_LIST += msm8660
-      MM_STILL_V4L2_DRIVER_LIST += msm8960
-      ifeq ($(call is-board-platform-in-list,$(MM_STILL_V4L2_DRIVER_LIST)),true)
-        V4L2_BASED_LIBCAM := true
-      endif
 ifeq ($(USE_DEVICE_SPECIFIC_CAMERA),true)
 
 include $(CLEAR_VARS)
@@ -22,20 +13,6 @@ LOCAL_CFLAGS:= -DDLOPEN_LIBMMCAMERA=$(DLOPEN_LIBMMCAMERA)
 
 LOCAL_CFLAGS += -DUSE_ION
 
-#define BUILD_UNIFIED_CODE
-      ifeq ($(call is-board-platform,msm7x27a),true)
-        BUILD_UNIFIED_CODE := true
-      else
-        BUILD_UNIFIED_CODE := false
-      endif
-
-ifeq ($(call is-board-platform,msm7x27a),true)
-        LOCAL_CFLAGS+= -DVFE_7X27A
-      endif
-
-ifeq ($(strip $(TARGET_USES_ION)),true)
-        LOCAL_CFLAGS += -DUSE_ION
-      endif
 LOCAL_CFLAGS += -DCAMERA_ION_HEAP_ID=ION_CAMERA_HEAP_ID
 LOCAL_CFLAGS += -DCAMERA_ZSL_ION_HEAP_ID=ION_CAMERA_HEAP_ID
 LOCAL_CFLAGS += -DCAMERA_GRALLOC_HEAP_ID=GRALLOC_USAGE_PRIVATE_CAMERA_HEAP

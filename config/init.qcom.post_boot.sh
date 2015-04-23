@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# Copyright (c) 2009-2012, Code Aurora Forum. All rights reserved.
+# Copyright (c) 2009-2012, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -8,7 +8,7 @@
 #     * Redistributions in binary form must reproduce the above copyright
 #       notice, this list of conditions and the following disclaimer in the
 #       documentation and/or other materials provided with the distribution.
-#     * Neither the name of Code Aurora nor
+#     * Neither the name of The Linux Foundation nor
 #       the names of its contributors may be used to endorse or promote
 #       products derived from this software without specific prior written
 #       permission.
@@ -30,7 +30,7 @@ target=`getprop ro.board.platform`
 case "$target" in
     "msm7201a_ffa" | "msm7201a_surf" | "msm7627_ffa" | "msm7627_6x" | "msm7627a"  | "msm7627_surf" | \
     "qsd8250_surf" | "qsd8250_ffa" | "msm7630_surf" | "msm7630_1x" | "msm7630_fusion" | "qsd8650a_st1x" | \
-    "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
+    "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren" | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
         echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
         echo 90 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
         ;;
@@ -50,16 +50,11 @@ case "$target" in
 esac
 
 case "$target" in
-     "msm7201a_ffa" | "msm7201a_surf" | "msm7627_ffa" | "msm7627_6x" | "msm7627_surf" | "msm7630_surf" | "msm7630_1x" | "msm7630_fusion" | "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
+     "msm7201a_ffa" | "msm7201a_surf" | "msm7627_ffa" | "msm7627_6x" | "msm7627_surf" | "msm7630_surf" | "msm7630_1x" | "msm7630_fusion" | "msm7627a" | "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren"  | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
         echo 245760 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
         ;;
 esac
 
-case "$target" in
-    "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
-	 echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
-	 ;;
-esac
 
 case "$target" in
     "msm8660")
@@ -216,9 +211,29 @@ case "$target" in
     "msm8960" | "msm8660" | "msm7630_surf")
         echo 10 > /sys/devices/platform/msm_sdcc.3/idle_timeout
         ;;
-    "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
+    "msm7627a" | "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren"  | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
         echo 10 > /sys/devices/platform/msm_sdcc.1/idle_timeout
         ;;
+esac
+
+# Enable Power modes and set the CPU Freq Sampling rates
+case "$target" in
+     "msm7627a" | "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren"  | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
+        start qosmgrd
+	echo 1 > /sys/module/pm2/modes/cpu0/standalone_power_collapse/idle_enabled
+	echo 1 > /sys/module/pm2/modes/cpu1/standalone_power_collapse/idle_enabled
+	echo 1 > /sys/module/pm2/modes/cpu2/standalone_power_collapse/idle_enabled
+	echo 1 > /sys/module/pm2/modes/cpu3/standalone_power_collapse/idle_enabled
+	echo 1 > /sys/module/pm2/modes/cpu0/standalone_power_collapse/suspend_enabled
+	echo 1 > /sys/module/pm2/modes/cpu1/standalone_power_collapse/suspend_enabled
+	echo 1 > /sys/module/pm2/modes/cpu2/standalone_power_collapse/suspend_enabled
+	echo 1 > /sys/module/pm2/modes/cpu3/standalone_power_collapse/suspend_enabled
+	#SuspendPC:
+	echo 1 > /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled
+	#IdlePC:
+	echo 1 > /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled
+	echo 25000 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
+    ;;
 esac
 
 # Post-setup services
@@ -226,7 +241,7 @@ case "$target" in
     "msm8660" | "msm8960")
         start mpdecision
     ;;
-    "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
+    "msm7627a" | "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren"  | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
         soc_id=`cat /sys/devices/system/soc/soc0/id`
         case "$soc_id" in
             "127" | "128" | "129" | "137" | "167" | "168" | "169" | "170" )
@@ -237,26 +252,12 @@ case "$target" in
     ;;
 esac
 
-# Enable Power modes and set the CPU Freq Sampling rates
-case "$target" in
-     "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
-        start qosmgrd
-	echo 1 > /sys/module/pm2/modes/cpu0/standalone_power_collapse/idle_enabled
-	echo 1 > /sys/module/pm2/modes/cpu1/standalone_power_collapse/idle_enabled
-	echo 1 > /sys/module/pm2/modes/cpu0/standalone_power_collapse/suspend_enabled
-	echo 1 > /sys/module/pm2/modes/cpu1/standalone_power_collapse/suspend_enabled
-	#SuspendPC:
-	echo 1 > /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled
-	#IdlePC:
-	echo 1 > /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled
-	echo 25000 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
-    ;;
-esac
 
 # Change adj level and min_free_kbytes setting for lowmemory killer to kick in
 case "$target" in
-     "msm7627a" | "msm8625" | "msm8625_d9" | "msm8625_d9c" | "msm8625_i6" | "msm8625_i6c" | "msm8625_i6c_smartfren" | "msm8x25_i3dc_smartfren" | "msm8x25_i3dc" | "msm8x25_i3d")
-	echo 0,1,2,4,9,12 > /sys/module/lowmemorykiller/parameters/adj
+     "msm7627a" | "msm8625" | "msm8x25q_i3" | "msm8x25q_i3c" | "msm8x25q_i7" | "msm8x25q_i7c" | "msm8x25q_i7c_smartfren" | "msm8x25q_d5" | "msm8x25q_d5c" | "msm8x25q_d5c_smartfren" | "msm8x25q_d9p" | "msm8x25q_d9pc" | "msm8x25q_i6p" | "msm8x25q_i6cp" | "msm8x25q_d10" | "msm8x25q_d10c" | "msm8x25q_d10c_smartfren"  | "msm8x25q_i6cp_smartfren" | "msm8x25q_i2" | "msm8x25q_i2c" | "AD682J")
+	echo 0,1,2,4,6,7 > /sys/module/lowmemorykiller/parameters/adj
+	echo 4075,5437,6799,8847,11520,15360 > /sys/module/lowmemorykiller/parameters/minfree
 	echo 5120 > /proc/sys/vm/min_free_kbytes
      ;;
 esac

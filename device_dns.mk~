@@ -65,16 +65,7 @@ PRODUCT_COPY_FILES += \
 device/dns/s4503/recovery/sbin/rmt_storage_recovery:/recovery/root/sbin/rmt_storage_recovery \
 device/dns/s4503/recovery/sbin/rmt_oeminfo_recovery:/recovery/root/sbin/rmt_oeminfo_recovery \
 device/dns/s4503/recovery/sbin/linker:/recovery/root/sbin/linker \
-device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
-
-# INIT.D Files
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/init.d/sqlite3:system/xbin/sqlite3 \
-    $(LOCAL_PATH)/config/init.d/zipalign:system/xbin/zipalign \
-    $(LOCAL_PATH)/config/init.d/91zipalign:system/etc/init.d/91zipalign \
-    $(LOCAL_PATH)/config/init.d/sqlite_optimize:system/etc/init.d/sqlite_optimize \
-    $(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
-    $(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
+device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh 
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -93,8 +84,8 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     wpa_supplicant_overlay.conf
 
-PRODUCT_PACKAGES += \
-    libQWiFiSoftApCfg
+#PRODUCT_PACKAGES += \
+#    libQWiFiSoftApCfg
 
 # Misc
 PRODUCT_PACKAGES += \
@@ -191,11 +182,11 @@ PRODUCT_PACKAGES += \
 
 # Camera Hal
 PRODUCT_PACKAGES += \
-   camera.msm7x27a
+    camera.msm7x27a
 
 # Webkit
-PRODUCT_PACKAGES += \
-    libwebcore
+#PRODUCT_PACKAGES += \
+#    libwebcore
 
 # Power Hal
 PRODUCT_PACKAGES += \
@@ -226,7 +217,7 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
-	$(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc \
+	$(LOCAL_PATH)/rootdir/init.device.rc:root/init.device.rc \
 	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
 	$(LOCAL_PATH)/rootdir/rmt_storage_recovery:root/rmt_storage_recovery\
 	$(LOCAL_PATH)/rootdir/nv_set:root/nv_set \
@@ -254,25 +245,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.max.fling_velocity=4000 \
     ro.opengles.version=131072 \
     ro.sf.lcd_density=240 \
-    ro.sys.fw.bg_apps_limit=20
     debug.gr.numframebuffers=3 \
     ro.bq.gpu_to_cpu_unsupported=1
   
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapgrowthlimit=128m \
-    dalvik.vm.heapsize=256m \
+    dalvik.vm.heapgrowthlimit=48m \
+    dalvik.vm.heapsize=128m \
     ro.config.low_ram=true \
     ro.ksm.default=1 \
     ro.config.low_ram=true
-
-PRODUCT_PROPERTY_OVERRIDES += \
-   media.stagefright.enable-player=true \
-   media.stagefright.enable-meta=false \
-   media.stagefright.enable-scan=true \
-   media.stagefright.enable-http=true \
-   media.stagefright.enable-fma2dp=true \
-   media.stagefright.enable-aac=true \
-   media.stagefright.enable-qcp=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
