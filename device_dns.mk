@@ -310,7 +310,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
   persist.radio.apm_sim_not_pwdn=1  
 
 $(call inherit-product, vendor/dns_S4503/s4503/s4503-vendor.mk)
-$(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
+$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+#$(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := DNS
