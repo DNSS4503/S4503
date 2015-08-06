@@ -26,6 +26,7 @@ PRODUCT_LOCALES := en_US
 PRODUCT_LOCALES += hdpi
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -69,12 +70,12 @@ device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
 
 # INIT.D Files
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/init.d/sqlite3:system/xbin/sqlite3 \
-    $(LOCAL_PATH)/config/init.d/zipalign:system/xbin/zipalign \
-    $(LOCAL_PATH)/config/init.d/91zipalign:system/etc/init.d/91zipalign \
-    $(LOCAL_PATH)/config/init.d/sqlite_optimize:system/etc/init.d/sqlite_optimize \
-    $(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
-    $(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
+	$(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
+    	$(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
+
+# Keychars
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -128,6 +129,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     make_ext4fs \
     e2fsck \
+    hwmac \
     resize2fs \
     setup_fs
 
@@ -309,9 +311,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
   persist.data_netmgrd_nint=16 \
   persist.radio.apm_sim_not_pwdn=1  
 
-$(call inherit-product, vendor/dns_S4503/s4503/s4503-vendor.mk)
+$(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
-#$(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
+# $(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := DNS

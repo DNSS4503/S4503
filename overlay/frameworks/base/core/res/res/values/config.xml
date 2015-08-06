@@ -97,7 +97,7 @@
     <bool name="config_animateScreenLights">false</bool>
 
     <!-- Indicate whether the SD card is accessible without removing the battery. -->
-    <bool name="config_batterySdCardAccessibility">true</bool>
+    <bool name="config_batterySdCardAccessibility">false</bool>
 
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
@@ -124,36 +124,35 @@
          Zone N:        array[N - 1] <= LUX < array[N]
          Zone N + 1:    array[N] <= LUX < infinity
          Must be overridden in platform specific overlays -->
-    <integer-array name="config_autoBrightnessLevels">
-        <item>2</item>
-        <item>10</item>
-        <item>30</item>
-        <item>80</item>
-        <item>145</item>
-        <item>300</item>
-        <item>550</item>
-        <item>1250</item>
+   <integer-array name="config_autoBrightnessLevels">
+        <item>225</item>
+        <item>320</item>
+        <item>1280</item>
+        <item>2600</item>
+        <item>10240</item>
     </integer-array>
+
+    <!-- Minimum screen brightness allowed by the power manager. -->
+    <integer name="config_screenBrightnessDim">15</integer>
 
     <!-- Vibrator pattern for feedback about a long screen/key press -->
     <integer-array name="config_longPressVibePattern">
         <item>0</item>
-        <item>4</item>
-        <item>60</item>
-        <item>61</item>
+        <item>20</item>
+        <item>20</item>
+        <item>55</item>
     </integer-array>
 
     <!-- Vibrator pattern for feedback about touching a virtual key -->
     <integer-array name="config_virtualKeyVibePattern">
         <item>0</item>
+        <item>55</item>
         <item>20</item>
-        <item>50</item>
-        <item>60</item>
     </integer-array>
 
     <!-- Vibrator pattern for a very short but reliable vibration for soft keyboard tap -->
     <integer-array name="config_keyboardTapVibePattern">
-        <item>80</item>
+        <item>55</item>
     </integer-array>
 
     <!-- Vibrator pattern for feedback about booting with safe mode disabled -->
@@ -190,14 +189,11 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>55</item>
-        <item>88</item>
-        <item>108</item>
-        <item>135</item>
-        <item>153</item>
-        <item>170</item>
-        <item>190</item>
-        <item>220</item>
+        <item>20</item>
+        <item>50</item>
+        <item>80</item>
+        <item>145</item>
+        <item>200</item>
         <item>255</item>
     </integer-array>
 
@@ -208,7 +204,17 @@
     <integer-array name="config_autoBrightnessButtonBacklightValues">
         <item>255</item>
         <item>255</item>
+        <item>255</item>
         <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <!-- Array of output values for keyboard backlight corresponding to the LUX values
+         in the config_autoBrightnessLevels array.  This array should have size one greater
+         than the size of the config_autoBrightnessLevels array.
+         This must be overridden in platform specific overlays -->
+    <integer-array name="config_autoBrightnessKeyboardBacklightValues">
         <item>0</item>
         <item>0</item>
         <item>0</item>
@@ -216,6 +222,10 @@
         <item>0</item>
         <item>0</item>
     </integer-array>
+
+    <integer name="config_buttonBrightnessSettingDefault">50</integer>
+    <integer name="config_keyboardBrightnessSettingDefault">0</integer>
+    <bool name="config_deviceHasVariableButtonBrightness">true</bool>
 
     <!-- Array of output values for keyboard backlight corresponding to the LUX values
          in the config_autoBrightnessLevels array.  This array should have size one greater

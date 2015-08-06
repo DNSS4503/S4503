@@ -32,14 +32,14 @@ import init.qcom.usb.rc
 on init
     mkdir /persist 0771 system system
 
-    mkdir /storage 0775 system sdcard_r
+mkdir /storage 0775 system sdcard_r
     mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
     mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
     mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard0 0000 system system
 
-    export SECONDARY_STORAGE /storage/sdcard0
-    export EXTERNAL_STORAGE /storage/sdcard1
+    export SECONDARY_STORAGE /storage/sdcard1
+    export EXTERNAL_STORAGE /storage/sdcard0
 
     symlink /storage/sdcard1 /mnt/sdcard
     symlink /storage/sdcard1 /sdcard
@@ -151,6 +151,18 @@ on boot
     chmod 0660 /sys/power/touch_event
     chmod 0660 /sys/power/touch_event_timer
 
+   # write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 25000
+   # write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 80
+   # write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 320000
+   # write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 320000
+   # write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 320000
+   # write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 320000
+   # write /sys/devices/platform/msm_sdcc.1/idle_timeout 10
+   # write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,9,12
+   # write /proc/sys/vm/min_free_kbytes 5120
+   # write /proc/sys/vm/page-cluster 0
+
+#New Config
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 25000
     write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 320000
@@ -321,8 +333,6 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0
 
 service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
-    user root
-    group root
     disabled
 
 service qcamerasvr /system/bin/mm-qcamera-daemon

@@ -58,7 +58,7 @@ public:
                                                            const char *device_address);
 
         virtual void setPhoneState(int state);
-		
+
         virtual audio_devices_t getDeviceForVolume(audio_devices_t device);
 
         virtual uint32_t  checkDeviceMuteStrategies(AudioOutputDescriptor *outputDesc,
@@ -67,6 +67,7 @@ public:
         virtual void setForceUse(AudioSystem::force_use usage, AudioSystem::forced_config config);
 protected:
         virtual audio_devices_t getDeviceForStrategy(routing_strategy strategy, bool fromCache = true);
+
         fm_modes fmMode;
         bool pendingForceNone;
 
