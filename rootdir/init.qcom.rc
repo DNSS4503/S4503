@@ -27,6 +27,7 @@
 #
 
 import init.target.rc
+import init.s4503.rc
 import init.qcom.usb.rc
 
 on init
@@ -34,17 +35,12 @@ on init
 
 mkdir /storage 0775 system sdcard_r
     mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard0 0000 system system
 
-    export SECONDARY_STORAGE /storage/sdcard1
     export EXTERNAL_STORAGE /storage/sdcard0
 
-    symlink /storage/sdcard1 /mnt/sdcard
-    symlink /storage/sdcard1 /sdcard
-    symlink /storage/sdcard0 /mnt/internal_sd
-    symlink /storage/sdcard0 /internal_sd
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
 
 on boot
     mount debugfs debugfs /sys/kernel/debug
@@ -328,10 +324,6 @@ service iprenew_p2p /system/bin/dhcpcd -n p2p
     oneshot
 
 service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
-    class late_start
-    disabled
-
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
     disabled
 

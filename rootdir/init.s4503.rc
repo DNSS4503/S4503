@@ -1,0 +1,64 @@
+#TORCH
+    chown system camera /sys/class/leds/flashlight/brightness 
+    chmod 0777          /sys/class/leds/flashlight/brightness
+
+#WIFI
+    # Dummy file, to keep the API happy. The default firmware does both modes
+    write /data/misc/wifi/fwpath ""
+    chmod 0666 /data/misc/wifi/fwpath
+
+# add begin by weiqingdan in 2013-01-07
+    # mark 2012-09-17 --- this order is very important for sensors
+    # input3 4 5 6 correspond to acc mag mag_raw ori
+    chmod 755 /system/bin/geomagneticd
+    chown system input /sys/class/input/input3/enable
+    chown system input /sys/class/input/input3/delay
+    chown system input /sys/class/input/input3/wake
+    chown system input /sys/class/input/input4/enable
+    chown system input /sys/class/input/input4/delay
+    chown system input /sys/class/input/input4/wake
+    chown compass input /sys/class/input/input5/offsets
+    chown compass input /sys/class/input/input5/dynamic_matrix
+    chown system input /sys/class/input/input6/enable
+    chown system input /sys/class/input/input6/delay
+    chown system input /sys/class/input/input6/wake
+# add end by weiqingdan in 2013-01-07
+    chown system system /sys/bus/platform/devices/fastboot/fastboot
+    chown system system /sys/bus/platform/devices/fastboot/resume
+    chown system system /sys/class/compass/akm8975/delay_acc
+    chown system system /sys/class/compass/akm8975/delay_mag
+    chown system system /sys/class/compass/akm8975/delay_ori
+    chown system system /sys/class/compass/akm8975/enable_acc
+    chown system system /sys/class/compass/akm8975/enable_mag
+    chown system system /sys/class/compass/akm8975/enable_ori
+    chown system system /sys/class/compass/akm8975/accel
+    chown input system /sys/bus/i2c/devices/1-0039/enable_als_sensor
+    chown input system /sys/bus/i2c/devices/1-0039/enable_ps_sensor
+    chown input system /sys/bus/i2c/devices/1-0039/ps_sensor_thld
+    chown input system /sys/bus/i2c/devices/1-0039/als_poll_delay
+    chmod 0664 /sys/bus/i2c/devices/1-0039/enable_als_sensor
+    chmod 0664 /sys/bus/i2c/devices/1-0039/enable_ps_sensor
+    chmod 0664 /sys/bus/i2c/devices/1-0039/ps_sensor_thld
+    chmod 0664 /sys/bus/i2c/devices/1-0039/als_poll_delay
+    chown input  system /sys/devices/i2c-1/1-000f/enable
+    chmod 0664 /sys/devices/i2c-1/1-000f/enable
+
+# add begin by weiqingdan in 201-01-07
+service orientationd /system/bin/orientationd
+     class main
+     user compass
+     group input
+service geomagneticd /system/bin/geomagneticd
+     class main
+     user compass
+     group system input
+#add end by weiqingdan in 2013-01-07
+
+on property:ro.hw_platform=msm8x25q_skud
+    start akmd
+
+on property:persist.sys.setbuildversion=1
+    start setbuildversion
+
+on property:persist.sys.setbuildversion=0
+    stop setbuildversion

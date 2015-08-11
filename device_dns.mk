@@ -22,7 +22,7 @@ LOCAL_PATH := device/dns/s4503
 
 DEVICE_PACKAGE_OVERLAYS := device/dns/s4503/overlay
 
-PRODUCT_LOCALES := en_US
+PRODUCT_LOCALES := ru_RU
 PRODUCT_LOCALES += hdpi
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
@@ -58,8 +58,8 @@ PRODUCT_COPY_FILES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio_policy.conf_fm:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/media/media_profiles_7627a.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/media/media_codecs_7627a.xml:system/etc/media_codecs.xml
 
 # Files needed for recovery image
 PRODUCT_COPY_FILES += \
@@ -85,6 +85,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.sh \
     ueventd.qcom.rc \
     init.target.rc \
+    init.s4503.rc \
     init.qcom.ril.sh \
     rmt_storage_recovery \
     init.recovery.qcom.rc
@@ -226,6 +227,7 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_core.sh:root/init.qcom.class_core.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_main.sh:root/init.qcom.class_main.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
+	$(LOCAL_PATH)/rootdir/init.s4503.rc:root/init.s4503.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
 	$(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc \
@@ -291,7 +293,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp,adb \
-    ro.vold.umsdirtyratio=50
+    ro.vold.umsdirtyratio=50 \
+    lpa.decode = false
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.webview.provider=classic
