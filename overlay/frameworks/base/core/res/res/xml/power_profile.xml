@@ -18,49 +18,40 @@
 -->
 
 <device name="Android">
-  <!-- Most values are the incremental current used by a feature,
-       in mA (measured at nominal voltage).
-       The default values are deliberately incorrect dummy values.
-       OEM's must measure and provide actual values before
-       shipping a device.
-       Example real-world values are given in comments, but they
-       are totally dependent on the platform and can vary
-       significantly, so should be measured on the shipping platform
-       with a power meter. -->
-  <item name="none">0</item>
-  <item name="screen.on">0.1</item>  <!-- ~200mA -->
-  <item name="screen.full">0.1</item>  <!-- ~300mA -->
-  <item name="bluetooth.active">0.1</item> <!-- Bluetooth data transfer, ~10mA -->
-  <item name="bluetooth.on">0.1</item>  <!-- Bluetooth on & connectable, but not connected, ~0.1mA -->
-  <item name="wifi.on">0.1</item>  <!-- ~3mA -->
-  <item name="wifi.active">0.1</item>  <!-- WIFI data transfer, ~200mA -->
-  <item name="wifi.scan">0.1</item>  <!-- WIFI network scanning, ~100mA -->
-  <item name="dsp.audio">0.1</item> <!-- ~10mA -->
-  <item name="dsp.video">0.1</item> <!-- ~50mA -->
-  <item name="radio.active">0.1</item> <!-- ~200mA -->
-  <item name="radio.scanning">0.1</item> <!-- cellular radio scanning for signal, ~10mA -->
-  <item name="gps.on">0.1</item> <!-- ~50mA -->
-  <!-- Current consumed by the radio at different signal strengths, when paging -->
-  <array name="radio.on"> <!-- Strength 0 to BINS-1 -->
-      <value>0.2</value> <!-- ~2mA -->
-      <value>0.1</value> <!-- ~1mA -->
-  </array>
-  <!-- Different CPU speeds as reported in
-       /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
-  <array name="cpu.speeds">
-     	<value>245760</value> <!-- 245 MHz CPU speed -->
-	<value>320000</value> <!-- 320 MHz CPU speed -->
-	<value>480000</value> <!-- 480 MHz CPU speed -->
-	<value>700800</value> <!-- 700 MHz CPU speed -->
-	<value>1008000</value> <!--1008 MHz CPU speed -->
-	<value>1152000</value> <!--1152 MHz CPU speed -->
-  </array>
-  <!-- Current when CPU is idle -->
-  <item name="cpu.idle">0.1</item>
-  <!-- Current at each CPU speed, as per 'cpu.speeds' -->
-  <array name="cpu.active">
-      <value>0.1</value>  <!-- ~100mA -->
-  </array>
-  <!-- This is the battery capacity in mAh (measured at nominal voltage) -->
-  <item name="battery.capacity">1800</item>
+    <item name="none">0</item>
+    <item name="screen.on">55</item>
+    <item name="screen.full">90</item>
+    <item name="bluetooth.active">90</item>
+    <item name="bluetooth.on">0.2</item>
+    <item name="wifi.on">4</item>
+    <item name="wifi.active">100</item>
+    <item name="wifi.scan">200</item>
+    <item name="dsp.audio">88</item>
+    <item name="dsp.video">200</item>
+    <item name="gps.on">84</item>
+    <item name="radio.active">160</item>
+    <item name="radio.scanning">156</item>
+    <array name="radio.on">
+        <value>7.5</value>
+        <value>5.5</value>
+    </array>
+    <array name="cpu.speeds">
+        <value>245760</value>
+        <value>320000</value>
+        <value>480000</value>
+        <value>700800</value>
+        <value>1008000</value>
+        <value>1152000</value>
+    </array>
+    <item name="cpu.idle">1.4</item>
+    <item name="cpu.awake">30</item>
+    <array name="cpu.active">
+        <value>64</value>
+        <value>67</value>
+        <value>80</value>
+        <value>130</value>
+        <value>200</value>
+        <value>205</value>
+    </array>
+    <item name="battery.capacity">1800</item>
 </device>
