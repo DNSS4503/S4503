@@ -63,10 +63,6 @@ service p2p_supplicant /system/bin/wpa_supplicant -ddd \
     disabled
     oneshot
 
-# service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-#    class late_start
-#    user root
-
 service thermald /system/bin/thermald
     class late_start
     user root

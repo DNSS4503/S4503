@@ -52,6 +52,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/config/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \
     $(LOCAL_PATH)/config/thermald.conf:system/etc/thermald.conf \
     $(LOCAL_PATH)/config/qosmgr_rules.xml:system/etc/qosmgr_rules.xml \
+    $(LOCAL_PATH)/config/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh \
+    $(LOCAL_PATH)/config/loc_parameter.ini:system/etc/loc_parameter.ini \
+    $(LOCAL_PATH)/config/qcom.cfg:system/etc/qcom.cfg \
+    $(LOCAL_PATH)/config/fastmmi.cfg:system/etc/fastmmi.cfg \
     $(LOCAL_PATH)/config/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
     $(LOCAL_PATH)/config/gps.conf:system/etc/gps.conf
 
@@ -227,13 +231,13 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_core.sh:root/init.qcom.class_core.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_main.sh:root/init.qcom.class_main.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
-	$(LOCAL_PATH)/rootdir/init.s4503.rc:root/init.s4503.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
 	$(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc \
 	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
 	$(LOCAL_PATH)/rootdir/rmt_storage_recovery:root/rmt_storage_recovery\
 	$(LOCAL_PATH)/rootdir/nv_set:root/nv_set \
+	$(LOCAL_PATH)/rootdir/init:root/init \
 	$(LOCAL_PATH)/rootdir/init.usb.rc:root/init.usb.rc 
 
 
@@ -301,6 +305,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
+    ro.qualcomm.cabl=1 \
     wifi.supplicant_scan_interval=60
 
 
@@ -308,6 +313,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
    ro.fm.analogpath.supported=false \
    ro.fm.transmitter=false \
    ro.fm.mulinst.recording.support=false
+
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.adb.secure=0
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.secure=0
 
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.use_data_netmgrd=true \
