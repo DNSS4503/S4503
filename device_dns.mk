@@ -123,11 +123,6 @@ PRODUCT_PACKAGES += \
     memtrack.msm7x27a \
     hwcomposer.msm7x27a
 
-# RIL
-PRODUCT_PACKAGES += \
-       libreference-ril.so \
-       libril.so \
-       rild
 # Wal
 PRODUCT_PACKAGES += \
     librs_jni \
