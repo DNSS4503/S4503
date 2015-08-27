@@ -307,6 +307,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     ro.qualcomm.cabl=1 \
     wifi.supplicant_scan_interval=60
+   
+# Voip
+PRODUCT_PROPERTY_OVERRIDES += \
+    lpa.decode=false \
+    tunnel.decode=false \
+    lpa.use-stagefright=false \
+    lpa.releaselock=false
 
 
 PRODUCT_PROPERTY_OVERRIDES += \
