@@ -38,7 +38,7 @@ on init
     #mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard0 0000 system system
 
-    №export SECONDARY_STORAGE /storage/sdcard1
+    #export SECONDARY_STORAGE /storage/sdcard1
     export EXTERNAL_STORAGE /storage/sdcard0
 
     symlink /storage/sdcard0 /mnt/sdcard
