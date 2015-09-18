@@ -1,0 +1,14 @@
+From: ChepKun <ProgrammerKun@gmail.com>
+Subject: [PATCH] build (0001): disable ART
+
+diff --git a/target/product/core_minimal.mk b/target/product/core_minimal.mk
+index a149556..1127082 100644
+--- a/target/product/core_minimal.mk
++++ b/target/product/core_minimal.mk
+@@ -62,6 +62,5 @@ PRODUCT_PACKAGES += \
+ PRODUCT_BOOT_JARS := core:conscrypt:okhttp:core-junit:bouncycastle:ext:framework:framework2:android.policy:services:apache-xml:webviewchromium
+ 
+ PRODUCT_RUNTIMES := runtime_libdvm_default
+-PRODUCT_RUNTIMES += runtime_libart
+ 
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)

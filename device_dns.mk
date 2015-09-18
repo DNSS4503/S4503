@@ -16,7 +16,7 @@
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 
 LOCAL_PATH := device/dns/s4503
 
@@ -75,7 +75,15 @@ device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
 # INIT.D Files
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
+	$(LOCAL_PATH)/config/init.d/80tzdata_updater:system/etc/init.d/80tzdata_updater \
     	$(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
+
+# SH FILE
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/config/init.qcom.composition_type.sh:system/etc/init.qcom.composition_type.sh \
+	$(LOCAL_PATH)/config/init.target.8x25.sh:system/etc/init.target.8x25.sh \
+	$(LOCAL_PATH)/config/init.qcom.set_dpi.sh:system/etc/init.qcom.set_dpi.sh \
+	$(LOCAL_PATH)/config/init.qcom.sd_hot_plug.sh:system/etc/init.qcom.sd_hot_plug.sh 
 
 # Keychars
 PRODUCT_COPY_FILES += \
@@ -175,15 +183,11 @@ PRODUCT_PACKAGES += \
     libc2dcolorconvert
 
 # Omx
+# Video
 PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
-    libstagefrighthw \
-    libdivxdrmdecrypt \
-    libdashplayer \
-    libOmxVdec \
-    libOmxVenc \
-    qcmediaplayer
+    libstagefrighthw
 
 # stagefright cmdline tools
 PRODUCT_PACKAGES += \
@@ -219,13 +223,6 @@ PRODUCT_PACKAGES += \
     libnl_2 \
     lights.msm7x27a
 
-# FM Radio
-PRODUCT_PACKAGES += \
-    qcom.fmradio \
-    libqcomfm_jni \
-    FM2 \
-    FMRecord
-
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/fstab.qcom:root/fstab.qcom \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_core.sh:root/init.qcom.class_core.sh \
@@ -233,11 +230,12 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
+	$(LOCAL_PATH)/rootdir/init.qcom.sh:root/init.qcom.sh \
+	$(LOCAL_PATH)/rootdir/init.qcom.usb.sh:root/init.qcom.usb.sh \
 	$(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc \
 	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
 	$(LOCAL_PATH)/rootdir/rmt_storage_recovery:root/rmt_storage_recovery\
 	$(LOCAL_PATH)/rootdir/nv_set:root/nv_set \
-	$(LOCAL_PATH)/rootdir/init:root/init \
 	$(LOCAL_PATH)/rootdir/init.usb.rc:root/init.usb.rc 
 
 
@@ -267,9 +265,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.bq.gpu_to_cpu_unsupported=1
   
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapgrowthlimit=128m \
-    dalvik.vm.heapsize=256m \
+    dalvik.vm.heapgrowthlimit=32m \
+    dalvik.vm.heapsize=96m \
     ro.config.low_ram=true \
+    persist.sys.strictmode.visual=false \
     ro.ksm.default=1 \
     ro.config.low_ram=true
 
