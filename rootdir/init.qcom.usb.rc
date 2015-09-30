@@ -27,8 +27,6 @@
 #
 
 on init
-    write /sys/class/android_usb/android0/f_rndis/manufacturer HUAWEI
-    write /sys/class/android_usb/android0/f_rndis/vendorID 12d1
     write /sys/class/android_usb/android0/f_rndis/wceis 1
 
 on boot
