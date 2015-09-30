@@ -26,12 +26,11 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 on init
     # framebuffer pls... :(
     write /sys/module/msm_fb/parameters/align_buffer 1
 
-service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p12 /dev/block/mmcblk0p15 /dev/block/mmcblk0p14 /dev/block/mmcblk0p13
+service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p9 /dev/block/mmcblk0p10 /dev/block/mmcblk0p14
     class core
 
 service hostapd /system/bin/hostapd -dddd /data/misc/wifi/hostapd.conf
@@ -63,20 +62,36 @@ service p2p_supplicant /system/bin/wpa_supplicant -ddd \
     disabled
     oneshot
 
+service wlan_detect /system/bin/wlan_detect
+    class main
+    user root
+    group root
+    oneshot
+
+service gps_check /system/bin/gps_check
+    class main
+    user root
+    group root
+    oneshot
+
+service akm8963 /system/bin/akmd8963
+    class main
+    disabled
+    oneshot
+
+service compassd /system/bin/compassd
+    class main
+    disabled
+    oneshot
+
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+    class late_start
+    user root
+
 service thermald /system/bin/thermald
     class late_start
     user root
     group root
-
-service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
-    user system
-    group system
-    disabled
-on property:persist.sys.thermal.monitor=1
-    start thermald
-
-on property:persist.sys.thermal.monitor=0
-    stop thermald
 
 service gpu_dcvsd /system/bin/gpu_dcvsd
     class late_start

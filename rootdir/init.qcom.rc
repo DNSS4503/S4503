@@ -26,7 +26,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import init.target.rc
+import init.device.rc
 import init.qcom.usb.rc
 
 on init
@@ -34,17 +34,17 @@ on init
 
     mkdir /storage 0775 system sdcard_r
     mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    #mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    #mkdir /storage/sdcard1 0000 system system
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard0 0000 system system
 
-    #export SECONDARY_STORAGE /storage/sdcard1
+    export SECONDARY_STORAGE /storage/sdcard1
     export EXTERNAL_STORAGE /storage/sdcard0
 
-    symlink /storage/sdcard0 /mnt/sdcard
-    symlink /storage/sdcard0 /sdcard
-    #symlink /storage/sdcard0 /mnt/internal_sd
-    #symlink /storage/sdcard0 /internal_sd
+    symlink /storage/sdcard1 /mnt/sdcard
+    symlink /storage/sdcard1 /sdcard
+    symlink /storage/sdcard0 /mnt/internal_sd
+    symlink /storage/sdcard0 /internal_sd
 
 on boot
     mount debugfs debugfs /sys/kernel/debug
@@ -70,29 +70,8 @@ on boot
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
-    # create symlink for fb1 as HDMI
-    symlink /dev/graphics/fb1 /dev/graphics/hdmi
-
-    # setup permissions for fb1 related nodes
-    chown system graphics /sys/class/graphics/fb1/hpd
-    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
-    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
-    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
-    chmod 0664 /sys/devices/virtual/graphics/fb0
-
-  #Set SUID bit for usbhub
-    chmod 0755 /system/bin/usbhub
-    chmod 755 /system/bin/usbhub_init
-
-    # Change owner and group for media server and surface flinger
-    chown system system /sys/devices/virtual/graphics/fb1/format_3d
-
     # For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
-
-    # insert the system monitor modules
-    insmod /system/lib/modules/sm_event_log.ko
-    insmod /system/lib/modules/sm_event_driver.ko
 
     # To allow interfaces to get v6 address when tethering is enabled
     write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
@@ -111,10 +90,6 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
-    write /proc/sys/net/ipv6/conf/rmnet_usb0/accept_ra 2
-    write /proc/sys/net/ipv6/conf/rmnet_usb1/accept_ra 2
-    write /proc/sys/net/ipv6/conf/rmnet_usb2/accept_ra 2
-    write /proc/sys/net/ipv6/conf/rmnet_usb3/accept_ra 2
 
     chmod 0664 /dev/light
     chmod 0664 /dev/proximity
@@ -150,21 +125,19 @@ on boot
     chown radio system /sys/power/touch_event_timer
     chmod 0660 /sys/power/touch_event
     chmod 0660 /sys/power/touch_event_timer
+    write /data/misc/wifi/fwpath ""
+    chmod 0666 /data/misc/wifi/fwpath
+    chown system camera /sys/class/leds/flashlight/brightness 
+    chmod 0777 /sys/class/leds/flashlight/brightness
 
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 25000
     write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 320000
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 320000
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 320000
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 320000
+
     write /sys/devices/platform/msm_sdcc.1/idle_timeout 10
     write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,9,12
     write /proc/sys/vm/min_free_kbytes 5120
     write /proc/sys/vm/page-cluster 0
-
-  # LEDs
-    chown system system /sys/class/leds/red/blink
-    chown system system /sys/class/leds/green/blink
 
     write /sys/module/pm2/modes/cpu0/standalone_power_collapse/idle_enabled 1
     write /sys/module/pm2/modes/cpu1/standalone_power_collapse/idle_enabled 1
@@ -172,67 +145,10 @@ on boot
     write /sys/module/pm2/modes/cpu1/standalone_power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu2/standalone_power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu3/standalone_power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu0/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu1/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu2/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu3/standalone_power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu1/power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu2/power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu3/power_collapse/suspend_enabled 1
-    write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu1/power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu2/power_collapse/idle_enabled 1
-    write /sys/module/pm2/modes/cpu3/power_collapse/idle_enabled 1
-
-# Prevents permission denied error for telephony
-    chmod 0644 /proc/cmdline
-
-on property:init.svc.bootanim=stopped
-    # Switch to ROW and balanced mode after boot for better UX
-    write /sys/block/mmcblk0/queue/scheduler cfq
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
-    write /dev/cpuctl/apps/cpu.notify_on_migrate 1
-    start mpdecision
-
-# CM Performance Profiles
-
-# Powersave
-on property:sys.perf.profile=0
-    stop mpdecision
-    start mpdecision
-
-# Balanced
-on property:sys.perf.profile=1
-    stop mpdecision
-    start mpdecision
-
-# Performance
-on property:sys.perf.profile=2
-    stop mpdecision
-    write /sys/devices/system/cpu/cpu0/online 1
-    write /sys/devices/system/cpu/cpu1/online 1
-    write /sys/devices/system/cpu/cpu2/online 1
-    write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1000800 
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1000800 
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1000800 
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1000800 
-    write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
 
 on emmc-fs
     # mount mmc partitions
     mount_all /fstab.qcom
-    swapon_all /fstab.qcom
 
 # msm specific files that need to be created on /data
 on post-fs-data
@@ -246,15 +162,10 @@ on post-fs-data
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
 
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
 
-    # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
-    # We chown/chmod /persist again so because mount is run as root + defaults
-    chown system system /persist
-    chmod 0771 /persist
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
@@ -277,38 +188,8 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-# Export GPIO56 for fusion targets to enable/disable hub
-service usbhub_init /system/bin/usbhub_init
-   class late_start
-   user root
-   disabled
-   oneshot
-
-#add support for dsds
-service ril-daemon1 /system/bin/rild -c 1
-    class main
-    socket rild1 stream 660 root radio
-    socket rild-debug1 stream 660 radio system
-    user root
-    disabled
-    group radio cache inet misc audio sdcard_rw qcom_oncrpc diag
-
-
-on property:ro.multi.rild=true
-    start ril-daemon1
-
-#add end
-
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
-
-on property:ro.board.platform=msm7630_fusion
-    start usbhub_init
-
-on property:wlan.driver.status=ok
-    chown root system /sys/android_wlan/wlan_power/sleep_policy
-    setprop wifi.wpa_supp.ssi 30
-    write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
 
 on property:wlan.driver.status=unloaded
     start hwmac
@@ -317,22 +198,41 @@ service hwmac /system/bin/hwmac
     class main
     oneshot
 
-# MMI START 
-service fastmmi /system/bin/mmi
-    user root
-    group root
-    oneshot
-
 service rmt_oeminfo /system/bin/rmt_oeminfo
     class core
 
 service netmgrd /system/bin/netmgrd
     class main
 
+service oem_rpc_svc /system/bin/oem_rpc_svc
+    class main
+
 service qmuxd /system/bin/qmuxd
     class main
     user radio
     group radio audio bluetooth gps qcom_diag
+
+service ril-daemon1 /system/bin/rild -c 1
+    class main
+    socket rild1 stream 660 root radio
+    socket rild-debug1 stream 660 radio system
+    user root
+    disabled
+    group radio cache inet misc audio sdcard_rw qcom_oncrpc diag
+
+on property:ro.multi.rild=true
+    start ril-daemon1
+
+service post_boot /system/bin/sh /init.qcom.ril.sh
+   class late_start
+   user root
+   disabled
+   oneshot
+
+service qcom-c_main-sh /system/bin/sh /init.qcom.class_main.sh
+    class main
+    user root
+    oneshot
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
     class late_start
@@ -368,12 +268,9 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0
     class late_start
     disabled
 
-#service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-#    class late_start
-#    user root
-#    group root
-#    disabled
-###########TEXET_TM4677##################################
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
 
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
@@ -385,84 +282,18 @@ service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
     user system
     group system
 
-service post_boot /system/bin/sh /init.qcom.ril.sh
-   class late_start
-   user root
-   disabled
-   oneshot
-
-service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
-    class core
-    user root
-    oneshot
-
-service qcom-c_main-sh /system/bin/sh /init.qcom.class_main.sh
-    class main
-    user root
-    oneshot
-
-service qcom-post-fs /system/bin/sh /system/etc/init.qcom.post_fs.sh
-    class core
-    user root
-    disabled
-    oneshot
-
-service qcom-sh /system/bin/sh /init.qcom.sh
-    class late_start
-    user root
-    oneshot
-
-service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
-    class late_start
-    user root
-    disabled
-    oneshot
-
-service comp-set /system/bin/sh /system/etc/init.qcom.composition_type.sh
-    class late_start
-    user root
-    critical
-    disabled
-    oneshot
-
-service version-set /system/bin/sh /system/etc/init.target.8x25.sh
-    class late_start
-    user root
-    critical
-    disabled
-    oneshot
-
-service dpi-set /system/bin/sh /system/etc/init.qcom.set_dpi.sh
-    user root
-    critical
-    disabled
-    oneshot
-
-service sd_hot_plug /system/bin/sh /system/etc/init.qcom.sd_hot_plug.sh
-    user root
-    critical
-    disabled
-    oneshot
-
-service time_daemon /system/bin/time_daemon
-    class late_start
+service fastmmi /system/bin/mmi
     user root
     group root
     oneshot
-    disabled
 
-on property:persist.timed.enable=true
-    start time_daemon
-service battery_monitor /system/bin/battery_monitor
-    user system
-    group system
+service akm8975 /system/bin/akmd8975
+    class main
     disabled
+    oneshot
 
 service charger /charger
     class charger
-
-service chg-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
-    class charger
     user root
+    group root
     oneshot
-

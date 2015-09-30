@@ -67,15 +67,17 @@ PRODUCT_COPY_FILES += \
 
 # Files needed for recovery image
 PRODUCT_COPY_FILES += \
+device/dns/s4503/recovery/sbin/charge_recovery:/recovery/root/sbin/charge_recovery \
 device/dns/s4503/recovery/sbin/rmt_storage_recovery:/recovery/root/sbin/rmt_storage_recovery \
 device/dns/s4503/recovery/sbin/rmt_oeminfo_recovery:/recovery/root/sbin/rmt_oeminfo_recovery \
 device/dns/s4503/recovery/sbin/linker:/recovery/root/sbin/linker \
-device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
+device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh 
 
 # INIT.D Files
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
 	$(LOCAL_PATH)/config/init.d/80tzdata_updater:system/etc/init.d/80tzdata_updater \
+	$(LOCAL_PATH)/config/init.d/01disabled_google_system_update:system/etc/init.d/01disabled_google_system_update \
     	$(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
 
 # SH FILE
@@ -94,13 +96,9 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.qcom.rc \
     init.qcom.usb.rc \
-    init.qcom.usb.sh \
     ueventd.qcom.rc \
-    init.target.rc \
-    init.s4503.rc \
-    init.qcom.ril.sh \
-    rmt_storage_recovery \
-    init.recovery.qcom.rc
+    init.device.rc \
+    init.qcom.ril.sh 
 
 # Wifi
 PRODUCT_PACKAGES += \
@@ -149,8 +147,7 @@ PRODUCT_PACKAGES += \
 # Keys
 PRODUCT_PACKAGES += \
     AVRCP.kl \
-    vee7_keypad \
-    7k_handset.kl \
+    7k_handset.kl 
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -183,11 +180,11 @@ PRODUCT_PACKAGES += \
     libc2dcolorconvert
 
 # Omx
-# Video
 PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxCore \
-    libstagefrighthw
+    libstagefrighthw \
+    libdashplayer
 
 # stagefright cmdline tools
 PRODUCT_PACKAGES += \
@@ -210,7 +207,8 @@ PRODUCT_PACKAGES += \
 
 # Power Hal
 PRODUCT_PACKAGES += \
-    power.msm7x27a
+    power.msm7x27a \
+    power.qcom
 
 # Enable Torch
 PRODUCT_PACKAGES += Torch
@@ -225,19 +223,12 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/fstab.qcom:root/fstab.qcom \
-	$(LOCAL_PATH)/rootdir/init.qcom.class_core.sh:root/init.qcom.class_core.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.class_main.sh:root/init.qcom.class_main.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
+	$(LOCAL_PATH)/rootdir/init.device.rc:root/init.device.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
-	$(LOCAL_PATH)/rootdir/init.qcom.sh:root/init.qcom.sh \
-	$(LOCAL_PATH)/rootdir/init.qcom.usb.sh:root/init.qcom.usb.sh \
-	$(LOCAL_PATH)/rootdir/init.target.rc:root/init.target.rc \
-	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc \
-	$(LOCAL_PATH)/rootdir/rmt_storage_recovery:root/rmt_storage_recovery\
-	$(LOCAL_PATH)/rootdir/nv_set:root/nv_set \
-	$(LOCAL_PATH)/rootdir/init.usb.rc:root/init.usb.rc 
-
+	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc 
 
 # Properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -313,7 +304,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     tunnel.decode=false \
     lpa.use-stagefright=false \
     lpa.releaselock=false
-
 
 PRODUCT_PROPERTY_OVERRIDES += \
    ro.fm.analogpath.supported=false \
