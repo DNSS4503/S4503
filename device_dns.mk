@@ -77,6 +77,7 @@ device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
 	$(LOCAL_PATH)/config/init.d/80tzdata_updater:system/etc/init.d/80tzdata_updater \
+	$(LOCAL_PATH)/config/init.d/002fix_freq:system/etc/init.d/002fix_freq \
 	$(LOCAL_PATH)/config/init.d/01disabled_google_system_update:system/etc/init.d/01disabled_google_system_update \
     	$(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
 
