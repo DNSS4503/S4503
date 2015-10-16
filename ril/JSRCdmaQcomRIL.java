@@ -43,11 +43,11 @@ import com.android.internal.telephony.cdma.SignalToneUtil;
 import java.util.ArrayList;
 
 /**
- * Custom Qualcomm SimReady RIL for Huawei using the latest Uicc stack
+ * Custom Qualcomm SimReady RIL for JSR using the latest Uicc stack
  *
  * {@hide}
  */
-public class HuaweiCdmaQcomRIL extends HuaweiQualcommRIL implements CommandsInterface {
+public class JSRCdmaQcomRIL extends JSRQualcommRIL implements CommandsInterface {
     boolean RILJ_LOGV = true;
     boolean RILJ_LOGD = true;
 
