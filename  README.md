@@ -1,1 +1,0 @@
-Device DNS S4503 BY WERITOS
