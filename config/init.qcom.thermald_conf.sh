@@ -36,12 +36,24 @@ THERMALD_CONF_SYMLINK=/etc/thermald.conf
 
 # symlink already exists, exit
 if [ -h $THERMALD_CONF_SYMLINK ]; then
-	echo "$THERMALD_CONF_SYMLINK already exists"
 	exit 0
 fi
 
 # create symlink to target-specific config file
-max_freq=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq`
-echo " /etc/thermald-8x25-${max_freq}_therm.conf"
-ln -s /etc/thermald-8x25-${max_freq}_therm.conf $THERMALD_CONF_SYMLINK 2>/dev/null
-# remount /system with read-only
+ver=`cat /sys/devices/system/soc/soc0/version`
+platformid=`cat /sys/devices/system/soc/soc0/platform_version`
+
+if [ "$ver" = "2.0" ]; then
+        case "$platformid" in
+             "196608") #PVT 1 & 2
+             ln -s /etc/thermald-8x25-msm2-msm_therm.conf $THERMALD_CONF_SYMLINK 2>/dev/null
+             ;;
+
+             *) #ALL other variants
+             ln -s /etc/thermald-8x25-msm2-pmic_therm.conf $THERMALD_CONF_SYMLINK 2>/dev/null
+             ;;
+        esac
+elif [ "$ver" = "1.0" ]; then
+	ln -s /etc/thermald-8x25-msm1-pmic_therm.conf $THERMALD_CONF_SYMLINK 2>/dev/null
+fi
+
