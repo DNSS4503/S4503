@@ -149,7 +149,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
 
 # Vold
 BOARD_VOLD_MAX_PARTITIONS := 19
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun1/file"
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 TARGET_USE_CUSTOM_SECOND_LUN_NUM := 1
 BOARD_WANTS_EMMC_BOOT := true
@@ -201,11 +201,11 @@ WIFI_EXT_MODULE_PATH := "/system/lib/modules/ath6kl/cfg80211.ko"
 WIFI_EXT_MODULE_NAME := "cfg80211"
 WIFI_DRIVER_FW_PATH_PARAM := "/data/misc/wifi/fwpath"
 
-# Recovery
+# Recovery # CWM
 BOARD_CUSTOM_GRAPHICS := ../../../device/dns/s4503/recovery/graphics.c
 TARGET_RECOVERY_FSTAB := device/dns/s4503/rootdir/recovery.fstab
-DEVICE_RESOLUTION := 540x960
-#BOARD_USE_CUSTOM_RECOVERY_FONT := "<font_15x40.h>"
+DEVICE_RESOLUTION := 540x960\
+BOARD_USE_CUSTOM_RECOVERY_FONT := "<font_15x40.h>"
 TARGET_BOOTLOADER_BOARD_NAME := msm7x27
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
@@ -213,5 +213,3 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_INITRC := device/dns/s4503/recovery/init.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/dns/s4503/recovery/recovery-keys.c
 
-# FIXME : TEMP HACK FOR CHARGER
-TARGET_NO_OFF_CHARGE := true

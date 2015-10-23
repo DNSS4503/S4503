@@ -47,15 +47,15 @@ PRODUCT_COPY_FILES += \
 
 # Config
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/AudioFilter.csv:system/etc/AudioFilter.csv \
     $(LOCAL_PATH)/config/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
     $(LOCAL_PATH)/config/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \
-    $(LOCAL_PATH)/config/thermald.conf:system/etc/thermald.conf \
+    $(LOCAL_PATH)/config/init.qcom.thermald_conf.sh:system/etc/init.qcom.thermald_conf.sh \
+    $(LOCAL_PATH)/config/thermald/thermald-8x25-msm1-pmic_therm.conf:system/etc/thermald-8x25-msm1-pmic_therm.conf \
+    $(LOCAL_PATH)/config/thermald/thermald-8x25-msm2-msm_therm.conf:system/etc/thermald-8x25-msm2-msm_therm.conf \
+    $(LOCAL_PATH)/config/thermald/thermald-8x25-msm2-pmic_therm.conf:system/etc/thermald-8x25-msm2-pmic_therm.conf \
     $(LOCAL_PATH)/config/qosmgr_rules.xml:system/etc/qosmgr_rules.xml \
     $(LOCAL_PATH)/config/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh \
-    $(LOCAL_PATH)/config/loc_parameter.ini:system/etc/loc_parameter.ini \
     $(LOCAL_PATH)/config/qcom.cfg:system/etc/qcom.cfg \
-    $(LOCAL_PATH)/config/fastmmi.cfg:system/etc/fastmmi.cfg \
     $(LOCAL_PATH)/config/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
     $(LOCAL_PATH)/config/gps.conf:system/etc/gps.conf
 
@@ -77,16 +77,13 @@ device/dns/s4503/recovery/sbin/charge.sh:/recovery/root/sbin/charge.sh
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/config/init.d/03battery_life:system/etc/init.d/03battery_life \
 	$(LOCAL_PATH)/config/init.d/80tzdata_updater:system/etc/init.d/80tzdata_updater \
-	$(LOCAL_PATH)/config/init.d/002fix_freq:system/etc/init.d/002fix_freq \
 	$(LOCAL_PATH)/config/init.d/01disabled_google_system_update:system/etc/init.d/01disabled_google_system_update \
     	$(LOCAL_PATH)/config/init.d/sysinit:system/bin/sysinit 
 
 # SH FILE
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/config/init.qcom.composition_type.sh:system/etc/init.qcom.composition_type.sh \
-	$(LOCAL_PATH)/config/init.target.8x25.sh:system/etc/init.target.8x25.sh \
-	$(LOCAL_PATH)/config/init.qcom.set_dpi.sh:system/etc/init.qcom.set_dpi.sh \
-	$(LOCAL_PATH)/config/init.qcom.sd_hot_plug.sh:system/etc/init.qcom.sd_hot_plug.sh 
+	$(LOCAL_PATH)/config/init.target.8x25.sh:system/etc/init.target.8x25.sh 
 
 # Keychars
 PRODUCT_COPY_FILES += \
@@ -228,6 +225,7 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
 	$(LOCAL_PATH)/rootdir/init.device.rc:root/init.device.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.ril.sh:root/init.qcom.ril.sh \
+	$(LOCAL_PATH)/rootdir/init.sensors.rc:root/init.sensors.rc \
 	$(LOCAL_PATH)/rootdir/init.qcom.usb.rc:root/init.qcom.usb.rc \
 	$(LOCAL_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc 
 
@@ -258,7 +256,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
   
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapgrowthlimit=32m \
-    dalvik.vm.heapsize=96m \
+    dalvik.vm.heapsize=128m \
     ro.config.low_ram=true \
     persist.sys.strictmode.visual=false \
     ro.ksm.default=1 \
@@ -287,7 +285,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
+    persist.sys.usb.config=mass_storage,adb \
     ro.vold.umsdirtyratio=50 \
     lpa.decode = false
 
@@ -318,6 +316,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.use_data_netmgrd=true \
   persist.data_netmgrd_nint=16 \
   persist.radio.apm_sim_not_pwdn=1  
+
+ifeq ($(TARGET_DEVICE),s4503)
+PRODUCT_PROPERTY_OVERRIDES += \
+	debug.sf.hw=1 \
+	debug.enabletr=false \
+	debug.composition.7x27A.type=gpu \
+	debug.composition.8x25.type=gpu \
+	debug.hwc.dynThreshold=1.91 \
+	dev.pm.dyn_sample_period=700000 \
+	ro.qc.sdk.camera.facialproc=false \
+	ro.qc.sdk.gestures.camera=false \
+	dalvik.vm.heaputilization=0.25 \
+	dalvik.vm.heapidealfree=8388608 \
+	dalvik.vm.heapconcurrentstart=2097152
+endif
 
 $(call inherit-product, vendor/dns/s4503/s4503-vendor.mk)
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
