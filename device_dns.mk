@@ -196,8 +196,8 @@ PRODUCT_PACKAGES += \
     muxer
 
 # Camera Hal
-PRODUCT_PACKAGES += \
-   camera.msm7x27a
+#PRODUCT_PACKAGES += \
+#   camera.msm7x27a
 
 # Webkit
 PRODUCT_PACKAGES += \

@@ -27,6 +27,7 @@
 #
 
 import init.device.rc
+import init.sensors.rc
 import init.qcom.usb.rc
 
 on init
@@ -34,17 +35,17 @@ on init
 
     mkdir /storage 0775 system sdcard_r
     mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0000 system system
+    #mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    #mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard0 0000 system system
 
     export SECONDARY_STORAGE /storage/sdcard1
     export EXTERNAL_STORAGE /storage/sdcard0
 
-    symlink /storage/sdcard1 /mnt/sdcard
-    symlink /storage/sdcard1 /sdcard
-    symlink /storage/sdcard0 /mnt/internal_sd
-    symlink /storage/sdcard0 /internal_sd
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
+   # symlink /storage/sdcard0 /mnt/internal_sd
+   # symlink /storage/sdcard0 /internal_sd
 
 on boot
     mount debugfs debugfs /sys/kernel/debug
@@ -146,6 +147,11 @@ on boot
     write /sys/module/pm2/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/pm2/modes/cpu0/power_collapse/idle_enabled 1
 
+on charger-fs
+    setprop ro.charger.delay 3
+    setprop ro.charger.power_key_code 107
+    setprop ro.charger.ust 2
+
 on emmc-fs
     # mount mmc partitions
     mount_all /fstab.qcom
@@ -223,11 +229,11 @@ service ril-daemon1 /system/bin/rild -c 1
 on property:ro.multi.rild=true
     start ril-daemon1
 
-service post_boot /system/bin/sh /init.qcom.ril.sh
-   class late_start
-   user root
-   disabled
-   oneshot
+#service post_boot /system/bin/sh /init.qcom.ril.sh
+#   class late_start
+#   user root
+#   disabled
+#   oneshot
 
 service qcom-c_main-sh /system/bin/sh /init.qcom.class_main.sh
     class main
@@ -294,6 +300,4 @@ service akm8975 /system/bin/akmd8975
 
 service charger /charger
     class charger
-    user root
-    group root
-    oneshot
+

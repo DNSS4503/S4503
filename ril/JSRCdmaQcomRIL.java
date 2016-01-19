@@ -54,7 +54,7 @@ public class JSRCdmaQcomRIL extends JSRQualcommRIL implements CommandsInterface 
     private Object mSMSLock = new Object();
     private boolean mIsSendingSMS = false;
     public static final long SEND_SMS_TIMEOUT_IN_MS = 30000;
-    public HuaweiCdmaQcomRIL(Context context, int networkMode, int cdmaSubscription) {
+    public JSRCdmaQcomRIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
         mQANElements = 4;
     }
